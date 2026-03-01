@@ -26,15 +26,7 @@
 <body class="bg-slate-50 text-slate-900">
     <div id="root"></div>
 
-    <!-- Formulario oculto para que Netlify detecte el buzón en el deploy -->
-    <form name="buzon-fiscalizacion" method="POST" data-netlify="true" data-netlify-honeypot="bot-field" hidden>
-        <input type="hidden" name="form-name" value="buzon-fiscalizacion" />
-        <p><label>No llenar: <input name="bot-field" /></label></p>
-        <input type="text" name="usuario" />
-        <input type="text" name="telefono" />
-        <input type="text" name="provincia" />
-        <textarea name="mensaje"></textarea>
-    </form>
+
 
     <script type="text/babel">
         const { useState, useMemo } = React;
@@ -202,20 +194,27 @@
                     return;
                 }
 
-                // FIX: activar estado de carga
                 setIsSubmitting(true);
                 setSubmitStatus(null);
 
-                const formData = new FormData();
-                formData.append("form-name", "buzon-fiscalizacion");
-                formData.append("usuario",   newSuggestion.usuario);
-                formData.append("telefono",  newSuggestion.telefono);
-                formData.append("provincia", newSuggestion.provincia);
-                formData.append("mensaje",   newSuggestion.mensaje);
+                const fecha = new Date().toISOString().split('T')[0];
 
-                // FIX: try/catch para manejar errores del fetch a Netlify
+                const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzOCSZnkplbB-5FIcXGjn_av8Df9018ozZkTO32K3kXjISemWr9iOEsF5fsqcb9tH3j/exec";
+
                 try {
-                    await fetch("/", { method: "POST", body: formData });
+                    // Enviar a Google Sheets
+                    await fetch(GOOGLE_SCRIPT_URL, {
+                        method: "POST",
+                        mode: "no-cors",
+                        headers: { "Content-Type": "application/json" },
+                        body: JSON.stringify({
+                            fecha,
+                            usuario:   newSuggestion.usuario,
+                            telefono:  newSuggestion.telefono,
+                            provincia: newSuggestion.provincia,
+                            mensaje:   newSuggestion.mensaje
+                        })
+                    });
 
                     const suggestion = {
                         id: Date.now(),
@@ -223,7 +222,7 @@
                         telefono:  newSuggestion.telefono,
                         provincia: newSuggestion.provincia,
                         mensaje:   newSuggestion.mensaje,
-                        fecha:     new Date().toISOString().split('T')[0]
+                        fecha
                     };
 
                     setSuggestions(prev => [suggestion, ...prev]);
@@ -370,17 +369,10 @@
                                 </div>
 
                                 <form
-                                    name="buzon-fiscalizacion"
-                                    method="POST"
-                                    data-netlify="true"
-                                    data-netlify-honeypot="bot-field"
                                     onSubmit={handleSubmit}
                                     className="space-y-4 relative z-10"
                                 >
-                                    <input type="hidden" name="form-name" value="buzon-fiscalizacion" />
-                                    <p className="hidden">
-                                        <label>No llenar: <input name="bot-field" /></label>
-                                    </p>
+
 
                                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                                         <div className="space-y-1">
