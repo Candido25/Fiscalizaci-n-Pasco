@@ -144,7 +144,7 @@
                     "Obra del Hospital Regional Antonio Blanco Guardia paralizada.",
                     "Escasez de médicos especialistas y equipamiento oncológico."
                 ],
-                estadisticas: { anemia: 52.4, desnutricion: 18.2, establecimientos: 45 }
+                estadisticas: { anemia: 12450, anemiaPorc: 52.4, desnutricion: 4320, desnutricionPorc: 18.2, establecimientos: 45 }
             },
             oxapampa: {
                 nombre: "Oxapampa",
@@ -153,7 +153,7 @@
                     "Dificultad de traslado de emergencias por geografía accidentada.",
                     "Alta incidencia de enfermedades tropicales sin prevención adecuada."
                 ],
-                estadisticas: { anemia: 38.1, desnutricion: 12.5, establecimientos: 32 }
+                estadisticas: { anemia: 8210, anemiaPorc: 38.1, desnutricion: 2840, desnutricionPorc: 12.5, establecimientos: 32 }
             },
             carrion: {
                 nombre: "Daniel Alcides Carrión",
@@ -162,7 +162,7 @@
                     "Elevada tasa de desnutrición crónica infantil.",
                     "Falta de ambulancias operativas para distritos alejados."
                 ],
-                estadisticas: { anemia: 48.9, desnutricion: 22.1, establecimientos: 28 }
+                estadisticas: { anemia: 5680, anemiaPorc: 48.9, desnutricion: 2530, desnutricionPorc: 22.1, establecimientos: 28 }
             }
         };
 
@@ -253,7 +253,7 @@
                                 <div className="text-center md:text-left">
                                     <h1 className="text-3xl font-black tracking-tighter uppercase italic leading-none">Lic. Jannet Paredes</h1>
                                     <p className="text-red-100 text-sm font-bold mt-1 uppercase tracking-widest">
-                                        Diputada por <span className="bg-white text-red-700 px-2 rounded">Pasco</span>
+                                        Diputada por <span className="bg-white text-red-700 px-2 rounded">Pasco</span> • <span className="text-white">Número 1</span>
                                     </p>
                                 </div>
                             </div>
@@ -320,12 +320,16 @@
                                 <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8 text-center">
                                     <div className="bg-slate-50 p-4 rounded-2xl border">
                                         <span className="text-[9px] font-black text-slate-400 uppercase block tracking-widest mb-1">Anemia Infantil</span>
-                                        <p className="text-4xl font-black text-red-700 leading-none">{currentData.estadisticas.anemia}%</p>
+                                        <p className="text-xl font-black text-red-400 leading-none mb-1">{currentData.estadisticas.anemiaPorc}%</p>
+                                        <p className="text-4xl font-black text-red-700 leading-none">{currentData.estadisticas.anemia.toLocaleString('es-PE')}</p>
+                                        <p className="text-[9px] font-black text-red-500 uppercase tracking-widest mt-1">Niños Afectados</p>
                                         <Icon name="TrendingUp" size={14} className="text-red-300 mx-auto mt-2" />
                                     </div>
                                     <div className="bg-slate-50 p-4 rounded-2xl border">
                                         <span className="text-[9px] font-black text-slate-400 uppercase block tracking-widest mb-1">Desnutrición</span>
-                                        <p className="text-4xl font-black text-red-700 leading-none">{currentData.estadisticas.desnutricion}%</p>
+                                        <p className="text-xl font-black text-red-400 leading-none mb-1">{currentData.estadisticas.desnutricionPorc}%</p>
+                                        <p className="text-4xl font-black text-red-700 leading-none">{currentData.estadisticas.desnutricion.toLocaleString('es-PE')}</p>
+                                        <p className="text-[9px] font-black text-red-500 uppercase tracking-widest mt-1">Niños en Riesgo</p>
                                         <Icon name="AlertCircle" size={14} className="text-red-300 mx-auto mt-2" />
                                     </div>
                                     <div className="bg-slate-50 p-4 rounded-2xl border text-prin-red">
